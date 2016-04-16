@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LudumDare 35</title>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            font-family: sans-serif;
+            background-color: #111;
+        }
+
+        #game {
+            margin: auto;
+        }
+
+        .info {
+            color: #fff;
+        }
+
+        .board {
+            display: flex;
+            flex-wrap: wrap;
+            width: 500px;
+            height: 500px;
+            background-color: #333;
+            padding: 5px;
+        }
+
+        .tile {
+            background-color: #ccc;
+            background-clip: content-box;
+            display: flex;
+            flex: 1 0 auto;
+
+            transition: all 0.5s;
+        }
+
+        .tile.highlight {
+            box-shadow: 0 0 5px rgba(0,0,0,0.4) inset;
+        }
+
+        .tile.active {
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.4) inset;
+        }
+
+        .tile.highlight.active {
+            transform: scale(1.2, 1.2);
+            position: relative;
+        }
+
+        .tile.locked {
+            opacity: 0.2;
+        }
+
+        .tile span {
+            display: block;
+            margin: auto;
+        }
+
+        .shape-0 {
+            background-color: rebeccapurple;
+            width: 20px;
+            height: 20px;
+        }
+
+        .shape-1 {
+            border-bottom: 20px solid magenta;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        .shape-2 {
+            background-color: coral;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="game">
+    <button @click="genLevel()">Gen level</button>
+    <div class="info">
+        <span>{{activePoints}}</span> |
+        <span>Points: {{points}}</span>
+    </div>
+    <div class="board">
+        <div v-for="tile in tiles"
+             class="tile"
+             v-bind:class="{'highlight': tile.highlight, 'active': tile.active, 'locked': tile.locked}"
+             v-bind:style="{flexBasis: 100/levelSize + '%'}"
+             @mouseover="highlightFrom(tile.index)"
+             @click="playMove(tile.index)">
+            <span v-bind:class="'shape-'+tile.shape"></span>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/vue.js"></script>
+<script src="js/game.js"></script>
+</body>
+
+</html>
