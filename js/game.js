@@ -47,6 +47,7 @@
         methods: {
             toggleInstructions: function () {
                 this.instructions = !this.instructions;
+                ga('send', 'event', 'Quadrisic', 'instructions', 'Toggle');
             },
             pointScores: function () {
                 var mapping = [];
@@ -66,6 +67,9 @@
                         locked: false
                     });
                 }
+
+                if(this.tiles.length > 0) ga('send', 'event', 'Quadrisic', 'start', 'Restart', this.points);
+                else ga('send', 'event', 'Quadrisic', 'start', 'Start', this.points);
 
                 this.gameOver = false;
                 this.instructions = false;
@@ -125,6 +129,7 @@
                 }
 
                 this.gameOver = true;
+                ga('send', 'event', 'Quadrisic', 'gameover', 'Points', this.points);
             }
         },
         computed: {
