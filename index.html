@@ -3,164 +3,7 @@
 
 <head>
     <title>LudumDare 35</title>
-    <style>
-        * {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            display: flex;
-            font-family: 'Open Sans', sans-serif;
-            background-color: #151515;
-        }
-
-        .instructions {
-            background-color: #fff;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 2rem;
-        }
-
-        .instruction-text {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-        }
-
-        .instruction-col {
-            padding: 0 2rem;
-        }
-
-        table {
-            border-collapse: collapse;
-            font-size: 80%;
-        }
-
-        table td, table th {
-            border: 1px solid #ccc;
-            padding: 0.5rem;
-        }
-
-        .btn {
-            background-color: #C837B1;
-            color: #fff;
-            border: 0;
-            border-radius: 1px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            display: block;
-            text-align: center;
-            margin: 1rem 0 0 0;
-            padding: 1rem;
-            cursor: pointer;
-        }
-
-        #game {
-            margin: auto;
-        }
-
-        .menu-gui {
-            background-color: #fff;
-            padding: 2rem;
-        }
-
-        .info {
-            color: #fff;
-        }
-
-        .board {
-            display: flex;
-            flex-wrap: wrap;
-            width: 500px;
-            height: 500px;
-            background-color: #fff;
-            padding: 5px;
-            box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
-            border-radius: 1px;
-        }
-
-        .tile {
-            background-clip: content-box;
-            display: flex;
-            flex: 1 0 auto;
-            border-radius: 10%;
-            border: 2px solid transparent;
-
-            transition: background 0.5s;
-        }
-
-        .tile.highlight {
-            background-color: #ccc;
-            box-shadow: 0 !important;
-        }
-
-        .tile.active {
-            background-color: #aaa;
-        }
-
-        .tile.active.highlight {
-            background-color: #eee;
-            box-shadow: 0 0 2px #000;
-        }
-
-        .tile.locked {
-            animation: tile-lock 0.5s;
-            animation-fill-mode: forwards;
-        }
-
-        .tile span {
-            display: block;
-            margin: auto;
-        }
-
-        .shape-0 {
-            background-color: #FFCC00;
-            width: 20px;
-            height: 20px;
-        }
-
-        .shape-1 {
-            border-bottom: 20px solid #C837B1;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-        }
-
-        .shape-2 {
-            background-color: #71C837;
-            width: 20px;
-            height: 20px;
-            border-radius: 100%;
-        }
-
-        @keyframes tile-lock {
-            0% {
-            }
-            50% {
-                transform: scale(5, 5);
-                background-color: transparent;
-                position: relative;
-                z-index: 10;
-            }
-            99% {
-                transform: scale(1, 1);
-                opacity: 1;
-            }
-            100% {
-                position: static;
-                opacity: 0.25;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/game.css">
 </head>
 
 <body>
@@ -217,18 +60,20 @@
 
     <div class="game-gui" v-if="tiles.length > 0">
         <div class="info">
-            <span>{{activePoints}}</span> |
-            <span>Points: {{points}}</span> |
-            <a class="btn" @click="toggleInstructions()">Instructions</a>
+            <div class="points-total">Points: {{points}}</div>
+            <div class="points-selected">{{activePoints}} points selected</div>
+            <div class="buttons">
+                <a class="btn" @click="toggleInstructions()">Instructions</a>
+            </div>
         </div>
         <div class="board">
             <div v-for="tile in tiles"
-                 class="tile"
+                 class="tile shape-{{tile.shape}}"
                  v-bind:class="{'highlight': tile.highlight, 'active': tile.active, 'locked': tile.locked}"
                  v-bind:style="{flexBasis: 100/levelSize + '%'}"
                  @mouseover="highlightFrom(tile.index)"
                  @click="playMove(tile.index)">
-                <span v-bind:class="'shape-'+tile.shape"></span>
+                <span></span>
             </div>
         </div>
     </div>

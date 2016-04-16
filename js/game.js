@@ -37,7 +37,7 @@
         el: '#game',
         data: {
             instructions: false,
-            levelSize: 9,
+            levelSize: 10,
             points: 0,
             tiles: []
         },
