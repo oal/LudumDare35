@@ -29,6 +29,14 @@ body {
   overflow: hidden;
 }
 
+.hidden-desktop {
+  display: none;
+}
+
+.landscape-warning {
+  display: none;
+}
+
 .instructions {
   background-color: #fff;
   position: absolute;
@@ -41,7 +49,7 @@ body {
 }
 
 .instruction-text {
-  max-width: 640px;
+  max-width: 800px;
   margin: 0 auto;
   display: flex;
 }
@@ -79,12 +87,13 @@ table td, table th {
 
 #game {
   margin: auto;
-  max-width: 640px;
 }
 
 .menu-gui {
   background-color: #fff;
   padding: 2rem;
+  margin: auto;
+  align-self: center;
 }
 
 .game-gui {
@@ -161,6 +170,7 @@ table td, table th {
   flex: 1 0 auto;
   border-radius: 10%;
   border: 2px solid transparent;
+  cursor: pointer;
 
   transition: background 0.5s;
 
@@ -184,8 +194,9 @@ table td, table th {
   }
 
   img {
-    width: 60%;
-    height: 60%;
+    padding: 0.5rem 0;
+    width: 75%;
+    height: 75%;
     margin: auto;
   }
 }
@@ -227,14 +238,34 @@ table td, table th {
   }
 }
 
-@media(max-width: 650px) {
+@media(max-width: 400px) {
+  .landscape-warning {
+    display: block;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  #game {
+    display: none !important;
+  }
+}
+
+@media(max-width: 1024px) {
   body {
     background-color: #fff;
+  }
+
+  .hidden-desktop {
+    display: block;
   }
 
   #game {
     display: flex;
     margin: 0;
+  }
+
+  .game-init {
+    margin: auto !important;
   }
 
   .instructions {
@@ -250,25 +281,35 @@ table td, table th {
   }
 
   .game-gui {
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
 
   .info {
-    flex-direction: column;
+    flex-direction: column-reverse;
 
     .points-total, .points-selected {
-      padding: 0.5rem 1rem 0 1rem;
+      padding: 1rem;
       margin: 0;
       text-align: left;
     }
 
     .points-total {
+      justify-content: flex-end;
       flex-grow: 0;
-      padding-top: 1rem;
+    }
+
+    .btn {
+      padding: 1rem 1.5rem;
     }
   }
 
-  .board {
-    width: 100%;
+  .tile img {
+    padding: 0;
+  }
+}
+
+@media(min-width: 1050px) {
+  #game {
+    max-width: 550px;
   }
 }

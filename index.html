@@ -9,7 +9,7 @@
 
 <body>
 
-<div id="game">
+<div id="game" v-bind:class="{'game-init': tiles.length === 0}">
     <div class="instructions" v-if="instructions">
         <div class="instruction-text">
             <div class="instruction-col">
@@ -86,6 +86,12 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="landscape-warning">
+    <img src="img/logo.svg" alt="quadrisic">
+    <p>This game can only be played in landscape mode on mobile.</p>
+    <p><strong>Please rotate your phone.</strong></p>
 </div>
 
 
