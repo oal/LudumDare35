@@ -10,6 +10,11 @@ $squareDark: darken($square, 10%);
 $triangleDark: darken($triangle, 10%);
 $circleDark: darken($circle, 10%);
 
+$width: 550px;
+$height: $width;
+
+$shapeSize: $width/9/2;
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -61,7 +66,7 @@ table td, table th {
 }
 
 .btn {
-  background-color: #C837B1;
+  background-color: $triangle;
   color: #fff;
   border: 0;
   border-radius: 1px;
@@ -71,6 +76,10 @@ table td, table th {
   margin: 1rem 0 0 0;
   padding: 1rem;
   cursor: pointer;
+
+  &:hover {
+    background-color: darken($triangle, 5%);
+  }
 }
 
 #game {
@@ -89,7 +98,7 @@ table td, table th {
   border-radius: 1px 1px 0 0;
 
   .points-total {
-    flex: 1 0 10%;
+    flex: 1 1 auto;
     margin: auto;
     font-weight: bold;
     padding: 0 1rem;
@@ -105,9 +114,33 @@ table td, table th {
 
   .buttons {
     flex: 0 1 auto;
+    display: flex;
 
     .btn {
       margin-top: 0;
+      border-left: 1px solid $triangleDark;
+    }
+  }
+}
+
+.game-over {
+  position: absolute;
+  z-index: 999;
+  width: $width;
+  height: $height;
+  display: flex;
+
+  span {
+    margin: auto;
+
+    strong {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    small {
+      display: block;
+      text-align: center;
     }
   }
 }
@@ -115,8 +148,8 @@ table td, table th {
 .board {
   display: flex;
   flex-wrap: wrap;
-  width: 500px;
-  height: 500px;
+  width: $width;
+  height: $height;
   background-color: #fff;
   padding: 5px;
   box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
@@ -160,8 +193,8 @@ table td, table th {
 .shape-0 {
   span {
     background-color: $square;
-    width: 20px;
-    height: 20px;
+    width: $shapeSize;
+    height: $shapeSize;
   }
 
   &.active {
@@ -175,9 +208,9 @@ table td, table th {
 
 .shape-1 {
   span {
-    border-bottom: 20px solid $triangle;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
+    border-bottom: $shapeSize solid $triangle;
+    border-left: $shapeSize/2 solid transparent;
+    border-right: $shapeSize/2 solid transparent;
   }
 
   &.active {
@@ -192,8 +225,8 @@ table td, table th {
 .shape-2 {
   span {
     background-color: $circle;
-    width: 20px;
-    height: 20px;
+    width: $shapeSize;
+    height: $shapeSize;
     border-radius: 100%;
   }
 

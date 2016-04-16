@@ -1,5 +1,7 @@
 (function () {
 
+    var clickSound = new Audio('sound/move.wav');
+
     var tilePoints = function (numTiles) {
         return 0.5 * (numTiles * numTiles - numTiles + 2);
     };
@@ -36,18 +38,19 @@
     new Vue({
         el: '#game',
         data: {
+            gameOver: false,
             instructions: false,
-            levelSize: 10,
+            levelSize: 9,
             points: 0,
             tiles: []
         },
         methods: {
-            toggleInstructions: function() {
+            toggleInstructions: function () {
                 this.instructions = !this.instructions;
             },
-            pointScores: function() {
+            pointScores: function () {
                 var mapping = [];
-                for(var i = 1; i <= 12; i++) {
+                for (var i = 1; i <= 12; i++) {
                     mapping.push([i, tilePoints(i)]);
                 }
                 return mapping;
@@ -64,28 +67,29 @@
                     });
                 }
 
+                this.gameOver = false;
                 this.instructions = false;
                 this.points = 0;
                 this.tiles = level;
             },
             highlightFrom: function (targetIndex) {
-                for(var i = 0; i < this.tiles.length; i++) {
+                for (var i = 0; i < this.tiles.length; i++) {
                     var tile = this.tiles[i];
                     tile.highlight = false;
                     tile.active = false;
                 }
 
-                if(this.tiles[targetIndex].locked) {
+                if (this.tiles[targetIndex].locked) {
                     return
                 }
 
                 var activeShape = this.tiles[targetIndex].shape;
                 var selectedTiles = selectTiles(this.tiles, targetIndex);
 
-                for(i = 0; i< selectedTiles.length; i++) {
+                for (i = 0; i < selectedTiles.length; i++) {
                     var tile = this.tiles[selectedTiles[i]];
-                    if(tile.locked) continue;
-                    if(tile.shape === activeShape) tile.active = true;
+                    if (tile.locked) continue;
+                    if (tile.shape === activeShape) tile.active = true;
                     else tile.highlight = true;
                 }
 
@@ -108,6 +112,19 @@
                 }
 
                 this.points += tilePoints(numTiles);
+
+                clickSound.pause();
+                clickSound.currentTime = 0;
+                clickSound.play();
+
+                this.checkGameOver();
+            },
+            checkGameOver: function () {
+                for (var i = 0; i < this.tiles.length; i++) {
+                    if (!this.tiles[i].locked) return false;
+                }
+
+                this.gameOver = true;
             }
         },
         computed: {

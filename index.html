@@ -63,8 +63,16 @@
             <div class="points-total">Points: {{points}}</div>
             <div class="points-selected">{{activePoints}} points selected</div>
             <div class="buttons">
+                <a class="btn" @click="restart()">Restart</a>
                 <a class="btn" @click="toggleInstructions()">Instructions</a>
             </div>
+        </div>
+        <div class="game-over" v-if="gameOver">
+            <span>
+                <strong>Game over!</strong>
+                <small>You got {{points}} points.</small>
+                <a class="btn" @click="restart()">Play again</a>
+            </span>
         </div>
         <div class="board">
             <div v-for="tile in tiles"

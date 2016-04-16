@@ -51,6 +51,8 @@ table td, table th {
   margin: 1rem 0 0 0;
   padding: 1rem;
   cursor: pointer; }
+  .btn:hover {
+    background-color: #b4329f; }
 
 #game {
   margin: auto; }
@@ -65,7 +67,7 @@ table td, table th {
   display: flex;
   border-radius: 1px 1px 0 0; }
   .info .points-total {
-    flex: 1 0 10%;
+    flex: 1 1 auto;
     margin: auto;
     font-weight: bold;
     padding: 0 1rem; }
@@ -76,15 +78,32 @@ table td, table th {
     padding: 0 1rem;
     text-align: right; }
   .info .buttons {
-    flex: 0 1 auto; }
+    flex: 0 1 auto;
+    display: flex; }
     .info .buttons .btn {
-      margin-top: 0; }
+      margin-top: 0;
+      border-left: 1px solid #a02c8e; }
+
+.game-over {
+  position: absolute;
+  z-index: 999;
+  width: 550px;
+  height: 550px;
+  display: flex; }
+  .game-over span {
+    margin: auto; }
+    .game-over span strong {
+      font-size: 3rem;
+      font-weight: bold; }
+    .game-over span small {
+      display: block;
+      text-align: center; }
 
 .board {
   display: flex;
   flex-wrap: wrap;
-  width: 500px;
-  height: 500px;
+  width: 550px;
+  height: 550px;
   background-color: #fff;
   padding: 5px;
   box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
@@ -114,17 +133,17 @@ table td, table th {
 
 .shape-0 span {
   background-color: #FFCC00;
-  width: 20px;
-  height: 20px; }
+  width: 30.55556px;
+  height: 30.55556px; }
 .shape-0.active {
   background-color: #ffe066; }
   .shape-0.active span {
     background-color: #cca300; }
 
 .shape-1 span {
-  border-bottom: 20px solid #C837B1;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent; }
+  border-bottom: 30.55556px solid #C837B1;
+  border-left: 15.27778px solid transparent;
+  border-right: 15.27778px solid transparent; }
 .shape-1.active {
   background-color: #de87d0; }
   .shape-1.active span {
@@ -132,8 +151,8 @@ table td, table th {
 
 .shape-2 span {
   background-color: #71C837;
-  width: 20px;
-  height: 20px;
+  width: 30.55556px;
+  height: 30.55556px;
   border-radius: 100%; }
 .shape-2.active {
   background-color: #aade87; }
