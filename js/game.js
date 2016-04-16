@@ -1,11 +1,5 @@
 (function () {
 
-    var shapes = [
-        'square',
-        'triangle',
-        'circle'
-    ];
-
     var tilePoints = function (numTiles) {
         return 0.5 * (numTiles * numTiles - numTiles + 2);
     };
@@ -14,15 +8,7 @@
         return (++currShape) % 3;
     };
 
-    var selectSquare = function (tiles, centerIndex) {
-
-    };
-
-    var selectTriangle = function (tiles, centerIndex) {
-
-    };
-
-    var selectCircle = function (tiles, centerIndex) {
+    var selectTiles = function (tiles, centerIndex) {
         var selectedIndexes = [];
 
         var levelSize = Math.sqrt(tiles.length);
@@ -47,33 +33,26 @@
         return selectedIndexes;
     };
 
-    var selectTiles = function (tiles, shape, centerIndex) {
-        switch (shape) {
-            case 0:
-                return selectSquare(tiles, centerIndex);
-            case 1:
-                return selectTriangle(tiles, centerIndex);
-            case 2:
-                return selectCircle(tiles, centerIndex);
-            default:
-                console.error('Umm, this should never happen.');
-        }
-    };
-
     new Vue({
         el: '#game',
         data: {
+            instructions: false,
             levelSize: 9,
-            tiles: [],
             points: 0,
-            currentShape: 2,
-            shape: {
-                type: 'circle',
-                size: 3
-            }
+            tiles: []
         },
         methods: {
-            genLevel: function () {
+            toggleInstructions: function() {
+                this.instructions = !this.instructions;
+            },
+            pointScores: function() {
+                var mapping = [];
+                for(var i = 1; i <= 12; i++) {
+                    mapping.push([i, tilePoints(i)]);
+                }
+                return mapping;
+            },
+            restart: function () {
                 var level = [];
                 for (var i = 0; i < this.levelSize * this.levelSize; i++) {
                     level.push({
@@ -85,6 +64,8 @@
                     });
                 }
 
+                this.instructions = false;
+                this.points = 0;
                 this.tiles = level;
             },
             highlightFrom: function (targetIndex) {
@@ -98,18 +79,17 @@
                     return
                 }
 
-                var hy = Math.floor(targetIndex / this.levelSize);
-                var hx = targetIndex - hy * this.levelSize;
-
                 var activeShape = this.tiles[targetIndex].shape;
+                var selectedTiles = selectTiles(this.tiles, targetIndex);
 
-                var selectedTiles = selectTiles(this.tiles, this.currentShape, targetIndex);
                 for(i = 0; i< selectedTiles.length; i++) {
                     var tile = this.tiles[selectedTiles[i]];
                     if(tile.locked) continue;
-                    tile.highlight = true;
                     if(tile.shape === activeShape) tile.active = true;
+                    else tile.highlight = true;
                 }
+
+                this.tiles[targetIndex].highlight = true;
                 this.tiles[targetIndex].active = true;
             },
             playMove: function (targetIndex) {
@@ -119,16 +99,15 @@
                 var numTiles = 0;
                 for (var i = 0; i < this.tiles.length; i++) {
                     var tile = this.tiles[i];
-                    if (tile.active && tile.highlight && !tile.locked) {
+                    if (tile.active && !tile.highlight && !tile.locked) {
                         numTiles++;
                         tile.shape = nextShape(tile.shape);
                     }
                     tile.active = false;
                     tile.highlight = false;
                 }
-                var points = tilePoints(numTiles);
 
-                this.points += points;
+                this.points += tilePoints(numTiles);
             }
         },
         computed: {
@@ -136,7 +115,7 @@
                 var numTiles = 0;
                 for (var i = 0; i < this.tiles.length; i++) {
                     var tile = this.tiles[i];
-                    if (tile.active && tile.highlight) {
+                    if (tile.active && !tile.highlight) {
                         numTiles++;
                     }
                 }

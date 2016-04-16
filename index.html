@@ -9,6 +9,7 @@
             -moz-box-sizing: border-box;
             box-sizing: border-box;
         }
+
         html, body {
             height: 100%;
             margin: 0;
@@ -17,12 +18,60 @@
 
         body {
             display: flex;
-            font-family: sans-serif;
-            background-color: #111;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #151515;
+        }
+
+        .instructions {
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 2rem;
+        }
+
+        .instruction-text {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .instruction-col {
+            padding: 0 2rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            font-size: 80%;
+        }
+
+        table td, table th {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+        }
+
+        .btn {
+            background-color: #C837B1;
+            color: #fff;
+            border: 0;
+            border-radius: 1px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            display: block;
+            text-align: center;
+            margin: 1rem 0 0 0;
+            padding: 1rem;
+            cursor: pointer;
         }
 
         #game {
             margin: auto;
+        }
+
+        .menu-gui {
+            background-color: #fff;
+            padding: 2rem;
         }
 
         .info {
@@ -34,35 +83,39 @@
             flex-wrap: wrap;
             width: 500px;
             height: 500px;
-            background-color: #333;
+            background-color: #fff;
             padding: 5px;
+            box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
+            border-radius: 1px;
         }
 
         .tile {
-            background-color: #ccc;
             background-clip: content-box;
             display: flex;
             flex: 1 0 auto;
+            border-radius: 10%;
+            border: 2px solid transparent;
 
-            transition: all 0.5s;
+            transition: background 0.5s;
         }
 
         .tile.highlight {
-            box-shadow: 0 0 5px rgba(0,0,0,0.4) inset;
+            background-color: #ccc;
+            box-shadow: 0 !important;
         }
 
         .tile.active {
-            background-color: #fff;
-            box-shadow: 0 0 5px rgba(0,0,0,0.4) inset;
+            background-color: #aaa;
         }
 
-        .tile.highlight.active {
-            transform: scale(1.2, 1.2);
-            position: relative;
+        .tile.active.highlight {
+            background-color: #eee;
+            box-shadow: 0 0 2px #000;
         }
 
         .tile.locked {
-            opacity: 0.2;
+            animation: tile-lock 0.5s;
+            animation-fill-mode: forwards;
         }
 
         .tile span {
@@ -71,22 +124,41 @@
         }
 
         .shape-0 {
-            background-color: rebeccapurple;
+            background-color: #FFCC00;
             width: 20px;
             height: 20px;
         }
 
         .shape-1 {
-            border-bottom: 20px solid magenta;
+            border-bottom: 20px solid #C837B1;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
         }
 
         .shape-2 {
-            background-color: coral;
+            background-color: #71C837;
             width: 20px;
             height: 20px;
             border-radius: 100%;
+        }
+
+        @keyframes tile-lock {
+            0% {
+            }
+            50% {
+                transform: scale(5, 5);
+                background-color: transparent;
+                position: relative;
+                z-index: 10;
+            }
+            99% {
+                transform: scale(1, 1);
+                opacity: 1;
+            }
+            100% {
+                position: static;
+                opacity: 0.25;
+            }
         }
     </style>
 </head>
@@ -94,19 +166,70 @@
 <body>
 
 <div id="game">
-    <button @click="genLevel()">Gen level</button>
-    <div class="info">
-        <span>{{activePoints}}</span> |
-        <span>Points: {{points}}</span>
+    <div class="instructions" v-if="instructions">
+        <div class="instruction-text">
+            <div class="instruction-col">
+                <img src="img/logo.svg" alt="quadrisic">
+                <p>
+                    A puzzle game made by Olav Lindekleiv for the 48 hour game compo LudumDare 35.
+                </p>
+                <p>
+                    The game has three shapes. Squares turn into triangles, triangles turn into circles,
+                    and circles turn back into squares.
+                </p>
+
+                <p>
+                    Use the mouse cursor to select a shape. Get as many other shapes of this kind inside your selection,
+                    for more points.
+                </p>
+
+                <p>
+                    See the scoring table for more information on point scoring.
+                </p>
+
+                <a class="btn" @click="restart()" v-if="tiles.length === 0">Start game</a>
+                <a class="btn" @click="toggleInstructions()" v-if="tiles.length > 0">Back to game</a>
+            </div>
+            <div class="instruction-col">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Number of same shape</th>
+                        <th>Points scored</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="points in pointScores()">
+                        <td>{{points[0]}}</td>
+                        <td>{{points[1]}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="board">
-        <div v-for="tile in tiles"
-             class="tile"
-             v-bind:class="{'highlight': tile.highlight, 'active': tile.active, 'locked': tile.locked}"
-             v-bind:style="{flexBasis: 100/levelSize + '%'}"
-             @mouseover="highlightFrom(tile.index)"
-             @click="playMove(tile.index)">
-            <span v-bind:class="'shape-'+tile.shape"></span>
+
+    <div class="menu-gui" v-if="tiles.length == 0">
+        <img src="img/logo.svg" alt="quadrisic">
+        <a class="btn" @click="restart()">Start game</a>
+        <a class="btn" @click="toggleInstructions()">Instructions</a>
+    </div>
+
+    <div class="game-gui" v-if="tiles.length > 0">
+        <div class="info">
+            <span>{{activePoints}}</span> |
+            <span>Points: {{points}}</span> |
+            <a class="btn" @click="toggleInstructions()">Instructions</a>
+        </div>
+        <div class="board">
+            <div v-for="tile in tiles"
+                 class="tile"
+                 v-bind:class="{'highlight': tile.highlight, 'active': tile.active, 'locked': tile.locked}"
+                 v-bind:style="{flexBasis: 100/levelSize + '%'}"
+                 @mouseover="highlightFrom(tile.index)"
+                 @click="playMove(tile.index)">
+                <span v-bind:class="'shape-'+tile.shape"></span>
+            </div>
         </div>
     </div>
 </div>
