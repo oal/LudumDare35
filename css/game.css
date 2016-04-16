@@ -198,7 +198,7 @@ table td, table th {
     display: block; }
 
   .game-gui {
-    flex-direction: row-reverse; }
+    flex-direction: row; }
 
   .info {
     flex-direction: column-reverse; }
