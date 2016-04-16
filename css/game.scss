@@ -10,11 +10,6 @@ $squareDark: darken($square, 10%);
 $triangleDark: darken($triangle, 10%);
 $circleDark: darken($circle, 10%);
 
-$width: 550px;
-$height: $width;
-
-$shapeSize: $width/9/2;
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -46,7 +41,7 @@ body {
 }
 
 .instruction-text {
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
   display: flex;
 }
@@ -84,11 +79,17 @@ table td, table th {
 
 #game {
   margin: auto;
+  max-width: 640px;
 }
 
 .menu-gui {
   background-color: #fff;
   padding: 2rem;
+}
+
+.game-gui {
+  display: flex;
+  flex-direction: column;
 }
 
 .info {
@@ -126,8 +127,8 @@ table td, table th {
 .game-over {
   position: absolute;
   z-index: 999;
-  width: $width;
-  height: $height;
+  width: 100%;
+  height: 100%;
   display: flex;
 
   span {
@@ -148,8 +149,6 @@ table td, table th {
 .board {
   display: flex;
   flex-wrap: wrap;
-  width: $width;
-  height: $height;
   background-color: #fff;
   padding: 5px;
   box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
@@ -184,58 +183,28 @@ table td, table th {
     animation-fill-mode: forwards;
   }
 
-  span {
-    display: block;
+  img {
+    width: 60%;
+    height: 60%;
     margin: auto;
   }
 }
 
 .shape-0 {
-  span {
-    background-color: $square;
-    width: $shapeSize;
-    height: $shapeSize;
-  }
-
   &.active {
     background-color: $squareLight;
-
-    span {
-      background-color: $squareDark;
-    }
   }
 }
 
 .shape-1 {
-  span {
-    border-bottom: $shapeSize solid $triangle;
-    border-left: $shapeSize/2 solid transparent;
-    border-right: $shapeSize/2 solid transparent;
-  }
-
   &.active {
     background-color: $triangleLight;
-
-    span {
-      border-bottom-color: $triangleDark;
-    }
   }
 }
 
 .shape-2 {
-  span {
-    background-color: $circle;
-    width: $shapeSize;
-    height: $shapeSize;
-    border-radius: 100%;
-  }
-
   &.active {
     background-color: $circleLight;
-
-    span {
-      background-color: $circleDark;
-    }
   }
 }
 
@@ -255,5 +224,51 @@ table td, table th {
     position: static;
     opacity: 0.15;
     transform: scale(1, 1);
+  }
+}
+
+@media(max-width: 650px) {
+  body {
+    background-color: #fff;
+  }
+
+  #game {
+    display: flex;
+    margin: 0;
+  }
+
+  .instructions {
+    overflow: scroll;
+  }
+
+  .instruction-col {
+    margin: 1.5rem 0;
+  }
+
+  .instruction-text {
+    display: block;
+  }
+
+  .game-gui {
+    flex-direction: row;
+  }
+
+  .info {
+    flex-direction: column;
+
+    .points-total, .points-selected {
+      padding: 0.5rem 1rem 0 1rem;
+      margin: 0;
+      text-align: left;
+    }
+
+    .points-total {
+      flex-grow: 0;
+      padding-top: 1rem;
+    }
+  }
+
+  .board {
+    width: 100%;
   }
 }

@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>LudumDare 35</title>
     <link rel="stylesheet" href="css/game.css">
 </head>
@@ -81,7 +82,7 @@
                  v-bind:style="{flexBasis: 100/levelSize + '%'}"
                  @mouseover="highlightFrom(tile.index)"
                  @click="playMove(tile.index)">
-                <span></span>
+                <img v-bind:src="'img/tile-'+tile.shape+'.svg'">
             </div>
         </div>
     </div>
