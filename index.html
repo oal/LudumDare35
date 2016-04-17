@@ -57,6 +57,10 @@
         <img src="img/logo.svg" alt="quadrisic">
         <a class="btn" @click="restart()">Start game</a>
         <a class="btn" @click="toggleInstructions()">Instructions</a>
+        <a class="btn" @click="toggleSound()">
+            <span v-if="!enableSound">Enable sound</span>
+            <span v-if="enableSound">Disable sound</span>
+        </a>
     </div>
 
     <div class="game-gui" v-if="tiles.length > 0">

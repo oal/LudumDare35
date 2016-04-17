@@ -1,8 +1,12 @@
 (function () {
 
     var clickSound = new Audio('sound/move.wav');
+    var musicSound = new Audio('sound/music.mp3');
+    musicSound.loop = true;
+    musicSound.volume = 0.1;
 
     var tilePoints = function (numTiles) {
+        if (numTiles === 0) return 0;
         return 0.5 * (numTiles * numTiles - numTiles + 2);
     };
 
@@ -42,12 +46,23 @@
             instructions: false,
             levelSize: 9,
             points: 0,
-            tiles: []
+            tiles: [],
+            enableSound: false,
+            lastAction: new Date()
         },
         methods: {
             toggleInstructions: function () {
                 this.instructions = !this.instructions;
                 ga('send', 'event', 'Quadrisic', 'instructions', 'Toggle');
+            },
+            toggleSound: function() {
+                this.enableSound = !this.enableSound;
+                if(this.enableSound) {
+                    musicSound.play();
+                } else {
+                    clickSound.currentTime = 0;
+                    musicSound.pause();
+                }
             },
             pointScores: function () {
                 var mapping = [];
@@ -68,7 +83,7 @@
                     });
                 }
 
-                if(this.tiles.length > 0) ga('send', 'event', 'Quadrisic', 'start', 'Restart', this.points);
+                if (this.tiles.length > 0) ga('send', 'event', 'Quadrisic', 'start', 'Restart', this.points);
                 else ga('send', 'event', 'Quadrisic', 'start', 'Start', this.points);
 
                 this.gameOver = false;
@@ -83,7 +98,7 @@
                     tile.active = false;
                 }
 
-                if (this.tiles[targetIndex].locked) {
+                if (this.tiles[targetIndex].locked || this.gameOver) {
                     return
                 }
 
@@ -99,13 +114,23 @@
 
                 this.tiles[targetIndex].highlight = true;
                 this.tiles[targetIndex].active = true;
+
+                this.lastAction = new Date();
             },
             playMove: function (targetIndex) {
-                if (this.tiles[targetIndex].locked) return;
-                this.tiles[targetIndex].locked = true;
+                var target = this.tiles[targetIndex];
+                if (target.locked) return;
+
+                // If highlight and click was done within 40ms, stop and let the user confirm.
+                // This is needed for confirming moves on mobile.
+                var now = new Date();
+                if (now - this.lastAction < 100) return;
+                this.lastAction = now;
 
                 var numTiles = 0;
                 for (var i = 0; i < this.tiles.length; i++) {
+                    if (i === targetIndex) continue;
+
                     var tile = this.tiles[i];
                     if (tile.active && !tile.highlight && !tile.locked) {
                         numTiles++;
@@ -115,17 +140,30 @@
                     tile.highlight = false;
                 }
 
+                if (numTiles === 0) return;
+                target.locked = true;
+
                 this.points += tilePoints(numTiles);
 
-                clickSound.pause();
-                clickSound.currentTime = 0;
-                clickSound.play();
+                if (this.enableSound) {
+                    clickSound.pause();
+                    clickSound.currentTime = 0;
+                    clickSound.play();
+                }
 
                 this.checkGameOver();
             },
             checkGameOver: function () {
                 for (var i = 0; i < this.tiles.length; i++) {
-                    if (!this.tiles[i].locked) return false;
+                    if (!this.tiles[i].locked) {
+                        var possibleTiles = selectTiles(this.tiles, i);
+                        for (var j = 0; j < possibleTiles.length; j++) {
+                            if (possibleTiles[j] === i) continue;
+
+                            var tile = this.tiles[possibleTiles[j]];
+                            if (!tile.locked && tile.shape === this.tiles[i].shape) return false;
+                        }
+                    }
                 }
 
                 this.gameOver = true;

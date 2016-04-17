@@ -9,6 +9,7 @@ html, body {
   padding: 0; }
 
 body {
+  display: -webkit-flex;
   display: flex;
   font-family: 'Open Sans', sans-serif;
   background-color: #151515;
@@ -33,6 +34,7 @@ body {
 .instruction-text {
   max-width: 800px;
   margin: 0 auto;
+  display: -webkit-flex;
   display: flex; }
 
 .instruction-col {
@@ -70,27 +72,35 @@ table td, table th {
   align-self: center; }
 
 .game-gui {
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column; }
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  position: relative; }
 
 .info {
   background-color: #eee;
   color: #222;
+  display: -webkit-flex;
   display: flex;
   border-radius: 1px 1px 0 0; }
   .info .points-total {
+    -webkit-flex: 1 1 auto;
     flex: 1 1 auto;
     margin: auto;
     font-weight: bold;
     padding: 0 1rem; }
   .info .points-selected {
+    -webkit-flex: 1 0 30%;
     flex: 1 0 30%;
     margin: auto;
     font-weight: lighter;
     padding: 0 1rem;
     text-align: right; }
   .info .buttons {
+    -webkit-flex: 0 1 auto;
     flex: 0 1 auto;
+    display: -webkit-flex;
     display: flex; }
     .info .buttons .btn {
       margin-top: 0;
@@ -98,10 +108,11 @@ table td, table th {
 
 .game-over {
   position: absolute;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  display: flex; }
+  z-index: 998;
+  display: -webkit-flex;
+  display: flex;
+  padding: 3.5rem 2rem 0 2rem;
+  text-align: center; }
   .game-over span {
     margin: auto; }
     .game-over span strong {
@@ -112,6 +123,7 @@ table td, table th {
       text-align: center; }
 
 .board {
+  display: -webkit-flex;
   display: flex;
   flex-wrap: wrap;
   background-color: #fff;
@@ -121,7 +133,9 @@ table td, table th {
 
 .tile {
   background-clip: content-box;
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex: 1 0 auto;
   flex: 1 0 auto;
   border-radius: 10%;
   border: 2px solid transparent;
@@ -182,6 +196,7 @@ table td, table th {
     display: block; }
 
   #game {
+    display: -webkit-flex;
     display: flex;
     margin: 0; }
 
@@ -216,6 +231,9 @@ table td, table th {
     padding: 0; } }
 @media (min-width: 1050px) {
   #game {
-    max-width: 550px; } }
+    max-width: 550px; }
+
+  .game-over {
+    width: 100%; } }
 
 /*# sourceMappingURL=game.css.map */
