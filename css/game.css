@@ -160,7 +160,7 @@ table td, table th {
   border-radius: 10%;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: background 0.5s; }
+  transition: all 0.25s; }
   .tile.highlight {
     background-color: #e9e9e9;
     box-shadow: 0 !important; }
@@ -179,13 +179,16 @@ table td, table th {
     margin: auto; }
 
 .shape-0.active {
-  background-color: #ffe066; }
+  background-color: #d35fc1;
+  box-shadow: 0 0 2px #a02c8e inset; }
 
 .shape-1.active {
-  background-color: #de87d0; }
+  background-color: #8dd35f;
+  box-shadow: 0 0 2px #5aa02c inset; }
 
 .shape-2.active {
-  background-color: #aade87; }
+  background-color: #ffd633;
+  box-shadow: 0 0 2px #cca300 inset; }
 
 @keyframes tile-lock {
   0% {

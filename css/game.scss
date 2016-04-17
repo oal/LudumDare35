@@ -2,9 +2,9 @@ $square: #FFCC00;
 $triangle: #C837B1;
 $circle: #71C837;
 
-$squareLight: lighten($square, 20%);
-$triangleLight: lighten($triangle, 20%);
-$circleLight: lighten($circle, 20%);
+$squareLight: lighten($square, 10%);
+$triangleLight: lighten($triangle, 10%);
+$circleLight: lighten($circle, 10%);
 
 $squareDark: darken($square, 10%);
 $triangleDark: darken($triangle, 10%);
@@ -168,9 +168,9 @@ table td, table th {
 
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100 */
   background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(bottom, rgba(255,255,255,0.0) 0%, #ffffff 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(bottom, rgba(255,255,255,0.0) 0%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to top, rgba(255,255,255,0.0) 0%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0.0) 0%, #ffffff 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.0) 0%, #ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.0) 0%, #ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
   span {
     margin: auto;
@@ -206,7 +206,7 @@ table td, table th {
   border: 2px solid transparent;
   cursor: pointer;
 
-  transition: background 0.5s;
+  transition: all 0.25s;
 
   &.highlight {
     background-color: #e9e9e9;
@@ -237,19 +237,22 @@ table td, table th {
 
 .shape-0 {
   &.active {
-    background-color: $squareLight;
+    background-color: $triangleLight;
+    box-shadow: 0 0 2px $triangleDark inset;
   }
 }
 
 .shape-1 {
   &.active {
-    background-color: $triangleLight;
+    background-color: $circleLight;
+    box-shadow: 0 0 2px $circleDark inset;
   }
 }
 
 .shape-2 {
   &.active {
-    background-color: $circleLight;
+    background-color: $squareLight;
+    box-shadow: 0 0 2px $squareDark inset;
   }
 }
 
