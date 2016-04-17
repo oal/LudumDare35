@@ -15,6 +15,9 @@ body {
   background: url("../img/bg.png");
   overflow: hidden; }
 
+a {
+  color: #5aa02c; }
+
 .hidden-desktop {
   display: none; }
 

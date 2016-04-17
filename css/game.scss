@@ -30,6 +30,10 @@ body {
   overflow: hidden;
 }
 
+a {
+  color: $circleDark;
+}
+
 .hidden-desktop {
   display: none;
 }
