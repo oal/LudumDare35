@@ -123,8 +123,17 @@ table td, table th {
   z-index: 998;
   display: -webkit-flex;
   display: flex;
-  padding: 3.5rem 2rem 0 2rem;
-  text-align: center; }
+  padding: 3.5rem 2rem 2rem 2rem;
+  text-align: center;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100 */
+  background: #ffffff;
+  /* Old browsers */
+  background: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
   .game-over span {
     margin: auto; }
     .game-over span strong {
