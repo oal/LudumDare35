@@ -76,7 +76,7 @@
                 var level = [];
                 for (var i = 0; i < this.levelSize * this.levelSize; i++) {
                     level.push({
-                        shape: ~~(Math.random() * 3),
+                        shape: (Math.random() * 3)|0,
                         index: i,
                         highlight: false,
                         active: false,
@@ -93,8 +93,9 @@
                 this.tiles = level;
             },
             highlightFrom: function (targetIndex) {
+                var tile;
                 for (var i = 0; i < this.tiles.length; i++) {
-                    var tile = this.tiles[i];
+                    tile = this.tiles[i];
                     tile.highlight = false;
                     tile.active = false;
                 }
@@ -107,10 +108,15 @@
                 var selectedTiles = selectTiles(this.tiles, targetIndex);
 
                 for (i = 0; i < selectedTiles.length; i++) {
-                    var tile = this.tiles[selectedTiles[i]];
+                    tile = this.tiles[selectedTiles[i]];
                     if (tile.locked) continue;
-                    if (tile.shape === activeShape) tile.active = true;
-                    else tile.highlight = true;
+
+                    if (tile.shape === activeShape) {
+                        tile.active = true;
+                    }
+                    else {
+                        tile.highlight = true;
+                    }
                 }
 
                 this.tiles[targetIndex].highlight = true;
@@ -122,7 +128,7 @@
                 var target = this.tiles[targetIndex];
                 if (target.locked) return;
 
-                // If highlight and click was done within 40ms, stop and let the user confirm.
+                // If highlight and click was done within 100ms, stop and let the user confirm.
                 // This is needed for confirming moves on mobile.
                 var now = new Date();
                 if (now - this.lastAction < 100) return;
@@ -162,7 +168,9 @@
                             if (possibleTiles[j] === i) continue;
 
                             var tile = this.tiles[possibleTiles[j]];
-                            if (!tile.locked && tile.shape === this.tiles[i].shape) return false;
+                            if (!tile.locked && tile.shape === this.tiles[i].shape) {
+                                return false;
+                            }
                         }
                     }
                 }
