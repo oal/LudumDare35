@@ -8,6 +8,14 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/nb_NO/sdk.js#xfbml=1&version=v2.6";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <div id="game" v-bind:class="{'game-init': tiles.length === 0}">
     <div class="instructions" v-if="instructions">
@@ -17,14 +25,18 @@
                 <p>
                     A puzzle game made by Olav Lindekleiv for the 48 hour game compo LudumDare 35.
                 </p>
-                <p>
-                    The game has three shapes. Squares turn into triangles, triangles turn into circles,
+                <p class="tile-explanation">
+                    The game has three shapes. Squares turn into triangles, while triangles turn into circles,
                     and circles turn back into squares.
                 </p>
 
+                <p class="tile-explanation">
+                    <img src="img/tile-0.svg"> &raquo; <img src="img/tile-1.svg"> &raquo; <img src="img/tile-2.svg"> &raquo; <img src="img/tile-0.svg"> &raquo; ...
+                </p>
+
                 <p>
-                    Use the mouse cursor to select a shape. Get as many other shapes of this kind inside your selection,
-                    for more points.
+                    Use the mouse pointer to select a shape. Get as many other shapes of this kind inside your selection,
+                    for more points. On mobile, tap to select, and tap again to confirm move.
                 </p>
 
                 <p>
@@ -98,6 +110,7 @@
     <p><strong>Please rotate your phone.</strong></p>
 </div>
 
+<div class="fb-like" data-href="https://oal.github.io/LudumDare35/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <script src="js/vue.js"></script>
 <script src="js/game.js"></script>

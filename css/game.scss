@@ -26,7 +26,7 @@ body {
   display: -webkit-flex;
   display: flex;
   font-family: 'Open Sans', sans-serif;
-  background-color: #151515;
+  background: url('../img/bg.png');
   overflow: hidden;
 }
 
@@ -36,6 +36,11 @@ body {
 
 .landscape-warning {
   display: none;
+  background-color: #fff;
+}
+
+.fb-like {
+  margin: 0 auto 2rem auto;
 }
 
 .instructions {
@@ -58,6 +63,11 @@ body {
 
 .instruction-col {
   padding: 0 2rem;
+}
+
+.tile-explanation img {
+  height: 20px;
+  vertical-align: middle;
 }
 
 table {
@@ -89,6 +99,7 @@ table td, table th {
 
 #game {
   margin: auto;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.5);
 }
 
 .menu-gui {
@@ -172,7 +183,6 @@ table td, table th {
   flex-wrap: wrap;
   background-color: #fff;
   padding: 5px;
-  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
   border-radius: 0 0 1px 1px;
 }
 
@@ -273,6 +283,10 @@ table td, table th {
     display: block;
   }
 
+  .fb-like {
+    display: none !important;
+  }
+
   #game {
     display: -webkit-flex;
     display: flex;
@@ -289,10 +303,22 @@ table td, table th {
 
   .instruction-col {
     margin: 1.5rem 0;
+
+    table {
+      width: 100%;
+    }
   }
 
   .instruction-text {
     display: block;
+  }
+
+  .menu-gui {
+    text-align: center;
+  }
+
+  .menu-gui img {
+    width: 40%;
   }
 
   .game-gui {
@@ -324,6 +350,10 @@ table td, table th {
 }
 
 @media(min-width: 1050px) {
+  body {
+    flex-direction: column;
+  }
+
   #game {
     max-width: 550px;
   }

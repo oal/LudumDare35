@@ -12,14 +12,18 @@ body {
   display: -webkit-flex;
   display: flex;
   font-family: 'Open Sans', sans-serif;
-  background-color: #151515;
+  background: url("../img/bg.png");
   overflow: hidden; }
 
 .hidden-desktop {
   display: none; }
 
 .landscape-warning {
-  display: none; }
+  display: none;
+  background-color: #fff; }
+
+.fb-like {
+  margin: 0 auto 2rem auto; }
 
 .instructions {
   background-color: #fff;
@@ -39,6 +43,10 @@ body {
 
 .instruction-col {
   padding: 0 2rem; }
+
+.tile-explanation img {
+  height: 20px;
+  vertical-align: middle; }
 
 table {
   border-collapse: collapse;
@@ -63,7 +71,8 @@ table td, table th {
     background-color: #b4329f; }
 
 #game {
-  margin: auto; }
+  margin: auto;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.5); }
 
 .menu-gui {
   background-color: #fff;
@@ -128,7 +137,6 @@ table td, table th {
   flex-wrap: wrap;
   background-color: #fff;
   padding: 5px;
-  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
   border-radius: 0 0 1px 1px; }
 
 .tile {
@@ -195,6 +203,9 @@ table td, table th {
   .hidden-desktop {
     display: block; }
 
+  .fb-like {
+    display: none !important; }
+
   #game {
     display: -webkit-flex;
     display: flex;
@@ -208,9 +219,17 @@ table td, table th {
 
   .instruction-col {
     margin: 1.5rem 0; }
+    .instruction-col table {
+      width: 100%; }
 
   .instruction-text {
     display: block; }
+
+  .menu-gui {
+    text-align: center; }
+
+  .menu-gui img {
+    width: 40%; }
 
   .game-gui {
     flex-direction: row; }
@@ -230,6 +249,9 @@ table td, table th {
   .tile img {
     padding: 0; } }
 @media (min-width: 1050px) {
+  body {
+    flex-direction: column; }
+
   #game {
     max-width: 550px; }
 
