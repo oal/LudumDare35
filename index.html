@@ -89,7 +89,10 @@
         <div class="game-over" v-if="gameOver">
             <span>
                 <strong>Game over!</strong>
-                <small>You got {{points}} points.</small>
+                <small>
+                    You got {{points}} points. <br>
+                    Your highest score: {{highscore}}.
+                </small>
                 <a class="btn" @click="restart()">Play again</a>
             </span>
         </div>

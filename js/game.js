@@ -46,6 +46,7 @@
             instructions: false,
             levelSize: 9,
             points: 0,
+            highscore: 0,
             tiles: [],
             enableSound: false,
             lastAction: new Date()
@@ -55,9 +56,9 @@
                 this.instructions = !this.instructions;
                 ga('send', 'event', 'Quadrisic', 'instructions', 'Toggle');
             },
-            toggleSound: function() {
+            toggleSound: function () {
                 this.enableSound = !this.enableSound;
-                if(this.enableSound) {
+                if (this.enableSound) {
                     musicSound.play();
                 } else {
                     clickSound.currentTime = 0;
@@ -167,6 +168,11 @@
                 }
 
                 this.gameOver = true;
+                if (this.points > localStorage.getItem('highscore')) {
+                    localStorage.setItem('highscore', this.points);
+                }
+                this.highscore = localStorage.getItem('highscore');
+
                 ga('send', 'event', 'Quadrisic', 'gameover', 'Points', this.points);
             }
         },
